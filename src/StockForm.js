@@ -11,13 +11,14 @@ class StockForm extends Component {
   };
 
   render() {
+    const stocks = this.props.data.map((item, index) => {
+      return <Stock key={index} name={item} handleClose={this.handleClose} />
+    });
+
     return (
       <Row className="StockForm">
         <Col md={12}>
-            <Stock name="GOOGL" handleClose={this.handleClose} />
-            <Stock name="SHLD" handleClose={this.handleClose} />
-            <Stock name="IBM" handleClose={this.handleClose} />
-            <Stock name="FBOOK" handleClose={this.handleClose} />
+            { stocks }
             <StockInput />
         </Col>
       </Row>

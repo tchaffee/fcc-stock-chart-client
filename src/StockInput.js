@@ -6,7 +6,7 @@ class StockInput extends Component {
   render() {
     return (
       <Col md={4} sm={6} className="Stock">
-        <h3>Here to input new stocks
+        <h3>'ere to input new stocks
         </h3>
       </Col>
     );
