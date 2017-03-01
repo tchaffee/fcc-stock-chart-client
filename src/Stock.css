@@ -1,0 +1,15 @@
+.Stock {
+  height: 120px;
+  border: solid black 1px;
+  padding: 0px 10px 5px 10px;
+}
+
+@media (min-width: 1200px) {
+  .Stock {
+    margin-right: 15px;
+    margin-bottom: 15px;
+  }
+  .Stock.col-md-4 {
+      width: 31%
+  }
+}

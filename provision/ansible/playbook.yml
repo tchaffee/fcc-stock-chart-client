@@ -1,0 +1,24 @@
+- hosts: all
+  become: yes
+  vars:
+  - node_packages: null
+
+  pre_tasks:
+  - name: update apt cache
+    apt: update_cache=yes
+
+  tasks:
+  - name: Install packages
+    apt:
+      name: "{{item}}"
+      state: latest
+    with_items:
+     - git
+
+  - name: Create react app
+    npm:
+      name: create-react-app
+      global: yes
+
+  roles:
+  - fubarhouse.nodejs
