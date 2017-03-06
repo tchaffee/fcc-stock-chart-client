@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './StockInput.css';
-import { Col, FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { Col, FormGroup, InputGroup, Button } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import fetchJsonp from 'fetch-jsonp';
 
@@ -41,9 +41,6 @@ class StockInput extends Component {
         <form id="StockInputForm">
           <FormGroup>
             <InputGroup>
-              {/*
-               <FormControl type="text" value={this.state.value} onChange={this.handleChange}/>
-              */}
               <AsyncTypeahead
                 selected={this.state.selected}
                 id="AsyncTypeAhead"

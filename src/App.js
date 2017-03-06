@@ -4,6 +4,7 @@ import StockChart from './StockChart';
 import StockForm from './StockForm';
 import { Grid } from 'react-bootstrap';
 import Markit from './Markit';
+import env from './env';
 
 class App extends Component {
 
@@ -19,7 +20,7 @@ class App extends Component {
 
   componentDidMount () {
 
-    this.connection = new WebSocket('ws://localhost:8080');
+    this.connection = new WebSocket(env.websocketServer);
 
     // listen to onmessage event
     this.connection.onmessage = function(evt) {
