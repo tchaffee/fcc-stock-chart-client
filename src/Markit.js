@@ -16,12 +16,17 @@ Markit.InteractiveChartApi = function (symbols, duration) {
 
     symbols.forEach(symbol => {
       const symbolUpper = symbol.toUpperCase();
-      returnPromise = this.getData(symbolUpper)
-        .then(data => {
-          let rtn;
-          rtn = this.render(symbolUpper, data, chartOptions);
-          return rtn;
-        });
+
+      if (symbol === '') {
+        returnPromise = Promise.resolve(null);
+      } else {
+        returnPromise = this.getData(symbolUpper)
+          .then(data => {
+            let rtn;
+            rtn = this.render(symbolUpper, data, chartOptions);
+            return rtn;
+          });
+        }
       promises.push(returnPromise);
     });
 

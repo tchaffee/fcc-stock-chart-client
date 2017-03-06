@@ -1,0 +1,16 @@
+
+.StockInput h4 {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: left;
+}
+
+.StockInput:hover {
+  border: solid green 1px;
+  border-left-width: 5px;
+}
+
+
+#StockInputForm input {
+  text-transform: uppercase;
+}

@@ -1,7 +1,27 @@
 .Stock {
   height: 120px;
-  border: solid black 1px;
+  border: solid gray 1px;
+  border-left-width: 5px;
   padding: 0px 10px 5px 10px;
+}
+
+.Stock:hover {
+  border: solid orange 1px;
+  border-left-width: 5px;
+}
+
+.Stock h3 {
+  font-size: 1.5em;
+  font-weight: 600;
+  text-align: left;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.StockInfo {
+  font-size: 1.2em;
+  text-align: left;
+  color: gray;
 }
 
 @media (min-width: 1200px) {

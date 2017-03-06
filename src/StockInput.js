@@ -1,35 +1,67 @@
 import React, { Component } from 'react';
-import './Stock.css';
+import './StockInput.css';
 import { Col, FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import fetchJsonp from 'fetch-jsonp';
 
 class StockInput extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = { value: '', options: [], selected: [] };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleSelected = this.handleSelected.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleSelected(selectedValue) {
+    console.log('selectedValue:');
+    console.log(selectedValue);
+    this.setState({ selected: [selectedValue[0]] });
+    console.log(this.state.selected);
+  }
+
+  handleInputChange(event) {
+    this.setState({ value: event.toUpperCase() });
   }
 
   handleSubmit (event) {
     event.preventDefault();
-    this.props.handleAdd(this.state.value);
-    this.setState({ value: '' });
+    if (this.state.selected.length > 0) {
+      this.props.handleAdd(this.state.selected[0]);
+    }
+    this.refs.typeahead.getInstance().clear();
   }
 
   render() {
     return (
-      <Col md={4} sm={6} className="Stock">
-        Syncs in realtime in each person's browser
-        <form>
+      <Col md={4} sm={6} className="Stock StockInput">
+        <h4>Syncs in realtime in each person's browser</h4>
+        <form id="StockInputForm">
           <FormGroup>
             <InputGroup>
-              <FormControl type="text" value={this.state.value} onChange={this.handleChange}/>
+              {/*
+               <FormControl type="text" value={this.state.value} onChange={this.handleChange}/>
+              */}
+              <AsyncTypeahead
+                selected={this.state.selected}
+                id="AsyncTypeAhead"
+                ref="typeahead"
+                placeholder="Choose a Stock Symbol..."
+                value={this.state.value}
+                onSearch={query => (
+                  fetchJsonp(`http://dev.markitondemand.com/MODApis/Api/v2/Lookup/jsonp?input=${query}`)
+                  .then(resp => resp.json())
+                  .then(json => {
+                    const options = json.map(el => el.Symbol);
+                    this.setState({options: options});
+                  })
+                  )}
+                options={this.state.options}
+                onInputChange={this.handleInputChange}
+                onChange={this.handleSelected}
+              />
               <InputGroup.Button>
                 <Button onClick={this.handleSubmit}>Add</Button>
               </InputGroup.Button>
