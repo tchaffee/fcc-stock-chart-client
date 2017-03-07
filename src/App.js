@@ -34,6 +34,11 @@ class App extends Component {
                stocks: json.stocks
              });
            }.bind(this))
+        } else {
+         this.setState({
+           chartOptions: {},
+           stocks: []
+         });
         }
     }.bind(this);
 

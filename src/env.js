@@ -1,5 +1,5 @@
 const env = {
-  websocketServer: 'ws://localhost:8080'
+  websocketServer: 'ws://fcc-stock-chart-tchaffee.c9users.io:8080'
 }
 
 export default env;
