@@ -18,9 +18,18 @@ class App extends Component {
     this.handleAdd = this.handleAdd.bind(this);
   };
 
+  openWebSocket () {
+    this.connection = new WebSocket(env.websocketServer);
+
+    this.connection.onclose = () => {
+      //try to reconnect in 1 second
+      setTimeout(() => this.openWebSocket, 1000);
+    };
+  }
+
   componentDidMount () {
 
-    this.connection = new WebSocket(env.websocketServer);
+    this.openWebSocket();
 
     // listen to onmessage event
     this.connection.onmessage = function(evt) {
