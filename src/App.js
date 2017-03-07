@@ -16,21 +16,21 @@ class App extends Component {
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.openWebSocket = this.openWebSocket.bind(this);
   };
 
   openWebSocket () {
+    const self = this;
+    
+    console.log('openWebSocket....');
     this.connection = new WebSocket(env.websocketServer);
 
     this.connection.onclose = () => {
+      console.log('trying to repoen websocket....');
       //try to reconnect in 1 second
-      setTimeout(() => this.openWebSocket, 1000);
+      setTimeout(function () { self.openWebSocket(); }, 1000);
     };
-  }
-
-  componentDidMount () {
-
-    this.openWebSocket();
-
+    
     // listen to onmessage event
     this.connection.onmessage = function(evt) {
       const json = JSON.parse(evt.data);
@@ -51,10 +51,17 @@ class App extends Component {
         }
     }.bind(this);
 
+    this.connection.onerror = (event) => {
+      console.log('websocket onerror....');
+      console.log(event);
+    };    
+  }
+
+  componentDidMount () {
+    this.openWebSocket();
     this.connection.onopen = evt => {
       this.connection.send('{ "action": "GET_STOCKS" }');
     };
-
   }
 
   handleClose (symbol) {
@@ -74,7 +81,13 @@ class App extends Component {
       symbol: symbol
     };
 
-    this.connection.send(JSON.stringify(message));
+    try {
+      this.connection.send(JSON.stringify(message));
+    } catch (e) {
+      console.log('Caught error...');
+      console.log(e);
+      this.openWebSocket();
+    } 
   };
 
   render() {
